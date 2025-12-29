@@ -1,0 +1,222 @@
+<style>
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+        display: table;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-justify {
+        text-align: justify;
+    }
+
+    .pull-right {
+        float: right !important;
+    }
+
+    .page-break {
+        page-break-after: always;
+    }
+</style>
+
+<?php
+$getsetvalue = new \App\Models\Setting();
+$currcy = DB::table('exchangerates')->select('currency_symbol')->where('id', $fd->customer->exchangerate_id)->first();
+?>
+@inject('getloan', 'App\Http\Controllers\InvestmentController')
+<div>
+    @if ($fd->customer->section == 'rich green masters')
+        <p><img src="{{ public_path('img/investment/RGcapital.png') }}" style="width:90%" alt="logo"> </p>
+    @elseif($fd->customer->section == 'rich green capital')
+    @else
+        <div style="text-align: center">
+            <p><img src="{{ asset($getsetvalue->getsettingskey('company_logo')) }}" width="120" alt="logo"> </p>
+            <p>Assetmatrix Microfinance Bank</p>
+            <p>info@assetmatrixMFB.com, 08033197469</p>
+            <p> 68 Herbert Macaulay Way By Kano Street Busstop, Oyingbo, Lagos, Nigeria</p>
+        </div>
+    @endif
+    <br>
+    <div class="row invoice-info">
+        <div class="col-sm-6">
+            <div class="container" style="text-align:justify;margin-top: -20px">
+                <strong>Generated Date: </strong> &nbsp; &nbsp; &nbsp;{{ date('d-m-Y') }}<br><br>
+                <strong> Customer Name: </strong>&nbsp;&nbsp;&nbsp;{{ $fd->customer->first_name }}
+                {{ $fd->customer->last_name }}<br />
+                <strong>Address :</strong> &nbsp; &nbsp; &nbsp; {{ $fd->customer->residential_address }} <br />
+                <strong> Phone No: </strong> &nbsp; &nbsp; &nbsp; {{ $fd->customer->phone }}<br>
+                <b>Investment Code:</b> &nbsp; &nbsp; &nbsp; {{ $fd->fixed_deposit_code }}<br>
+            </div>
+        </div>
+    </div>
+    <br>
+    Dear Sir/Ma,
+    <br>
+    <h4 class="text-center">
+        <b> CERTIFICATE OF INVESTMENT </b>
+    </h4>
+    <p>In line with your consideration, an investment has been created in your favour under the following terms and
+        conditions:</p>
+    <div style="width: 100%;">
+
+        <table class="table table-condensed table-striped">
+            <tbody>
+                <?php
+                $wtx = ($getloan->investment_total_interest($fd->id) / 100) * $fd->withholding_tax;
+                $payable = $getloan->investment_total_interest($fd->id) - $wtx;
+
+                $whtintr = ($getloan->investment_permonth($fd->id) / 100) * $fd->withholding_tax;
+                $towhtintr = $getloan->investment_permonth($fd->id) - $whtintr;
+
+                $dur = 0;
+                if ($fd->duration_type == 'year') {
+                    $dur = $fd->duration * 12;
+                } elseif ($fd->duration_type == 'month') {
+                    $dur = $fd->duration;
+                }
+                ?>
+                <tr>
+                    <td style="font-weight:bold">Type of Investment: </td>
+                    <td style="font-weight:bold">{{ $fd->fixed_deposit_product->name }}</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight:bold">Amount Invested: </td>
+                    <td style="font-weight:bold">{{ !empty($currcy) ? $currcy->currency_symbol : 'N' }}
+                        {{ number_format($fd->principal, 2) }}</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight:bold">Tenor: </td>
+                    <td style="font-weight:bold">{{ $dur * 30 }} Day(s)</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight:bold">Effective Date: </td>
+                    <td style="font-weight:bold"> {{ date('d M, Y', strtotime($fd->release_date)) }}</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight:bold">Maturity Date: </td>
+                    <td style="font-weight:bold">{{ date('d M, Y', strtotime($fd->maturity_date)) }}</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight:bold">Interest Rate: </td>
+                    <td style="font-weight:bold">{{ number_format($fd->interest_rate, 2) }}% /
+                        {{ $fd->interest_period }}</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight:bold">Interest Method: </td>
+                    <td style="font-weight:bold">{{ ucwords(str_replace('_', ' ', $fd->interest_method)) }}</td>
+                </tr>
+
+                <tr>
+                    <td style="font-weight:bold">Expected Interest (
+                        {{ $fd->duration . ' ' . $fd->duration_type . '(s)' }}
+                        ): </td>
+                    <td style="font-weight:bold">{{ !empty($currcy) ? $currcy->currency_symbol : 'N' }}
+                        {{ number_format($getloan->investment_total_interest($fd->id), 2) }}</td>
+                </tr>
+
+                @if ($fd->enable_withholding_tax == '1')
+                    <tr>
+                        <td style="font-weight:bold">Expected Monthly Interest: </td>
+                        <td style="font-weight:bold">{{ !empty($currcy) ? $currcy->currency_symbol : 'N' }}
+                            {{ number_format($towhtintr, 2) }}</td>
+                    </tr>
+                @else
+                    <tr>
+                        <td style="font-weight:bold">Expected Monthly Interest: </td>
+                        <td style="font-weight:bold">{{ !empty($currcy) ? $currcy->currency_symbol : 'N' }}
+                            {{ number_format($getloan->investment_permonth($fd->id), 2) }}</td>
+                    </tr>
+                @endif
+
+                @if ($fd->enable_withholding_tax == '1')
+                    <tr>
+                        <td style="font-weight:bold">Withholding Tax ({{ $fd->withholding_tax }}%): </td>
+                        <td style="font-weight:bold">N {{ number_format($wtx, 2) }}</td>
+                    </tr>
+                @endif
+
+
+                @if ($fd->enable_withholding_tax == '1')
+                    <tr>
+                        <td style="font-weight:bold">Total Interest Payable: </td>
+                        <td style="font-weight:bold">{{ !empty($currcy) ? $currcy->currency_symbol : 'N' }}
+                            {{ number_format($payable, 2) }}</td>
+                    </tr>
+                @else
+                    <tr>
+                        <td style="font-weight:bold">Total Interest Payable: </td>
+                        <td style="font-weight:bold">{{ !empty($currcy) ? $currcy->currency_symbol : 'N' }}
+                            {{ number_format($getloan->investment_total_interest($fd->id), 2) }}</td>
+                    </tr>
+                @endif
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="width: 100%;">
+        <p>The interest due on the consideration is as stated above and this will be credited to your specified bank
+            account upon maturity.</p>
+
+        <p>Please note that we have the obligation to rollover the principal at prevailing market interest rate if we do
+            not receive your instruction on how to treat the proceeds within three (3) working days before maturity.</p>
+
+        <p>Note that penalty charge for termination before maturity is {{ $getsetvalue->getsettingskey('fdcharge') }}%
+            flat on accrued interest.</p>
+
+        <p>Thank you for your patronage, we look forward to strengthening the mutual and beneficial relationship
+            existing between your good self and our organization.</p>
+
+        <p>Please acknowledge the receipt of this letter on the attached copy.</p>
+
+        Yours Faithfully, <br>
+        {{ $fd->customer->section == 'rich green masters' ? ucwords($getsetvalue->getsettingskey('company_name')) : ($fd->customer->section == 'rich green capital' ? 'RichGreen Masters Capital Limited' : 'Asset Matrix MFB') }}<br><br><br><br>
+
+
+
+      <table width="100%" style="margin-top:50px">
+    <tr>
+        <!-- LEFT SIGNATURE -->
+        <td width="50%" align="center" style="vertical-align:top;">
+            <img src="{{ public_path('img/investment/isaac1.png') }}"
+                 width="80" height="80"
+                 style="display:block; margin:0 auto;"><br>
+
+            <div style="width:220px; border-top:1.5px solid #000; margin:10px auto 5px;"></div>
+
+            <div style="font-size:13px;">Authorised Signatory</div>
+        </td>
+
+        <!-- RIGHT SIGNATURE -->
+        <td width="50%" align="center" style="vertical-align:top;">
+            <img src="{{ public_path('img/investment/lami1.png') }}"
+                 width="80" height="80"
+                 style="display:block; margin:0 auto;"><br>
+
+            <div style="width:220px; border-top:1.5px solid #000; margin:10px auto 5px;"></div>
+
+            <div style="font-size:13px;">Authorised Signatory</div>
+        </td>
+    </tr>
+</table>
+
+
+    </div>
+</div>

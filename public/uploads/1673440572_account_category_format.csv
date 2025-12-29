@@ -1,0 +1,23 @@
+Name,Account Type,Description
+ACCOUNT CLOSING,Income,Account closed income
+Accounts Payable,Liability,Accounts Payable
+Accounts Receivable,Asset,Accounts Receivable
+Accrued Interest Receivable,Asset,Accrued Interest Receivable
+Accumulated Depreciation,Asset,Accumulated Depreciation
+Advances Under Micro Leases,Asset,Advances Under Micro Leases
+Asset,Asset,Asset
+Bad Debts Written Off,Expense,Bad Debts Written Off
+Balances With Banks,Asset,Balances With Banks
+Bill Discounted,Asset,Bill Discounted
+Bonus Reserves,Capital,Bonus Reserves
+Borrowings On Lending,Liability,Borrowings On Lending
+Capital,Capital,Capital
+Cash Asset,Asset,Cash Asset
+CASH BALANCES,Asset,CASH ITEMS
+Cheques For Collection And Transit Items,Asset,Cheques For Collection And Transit Items
+Coins,Asset,Coins
+Commission,Income,Commission
+Debenture Loan Stock,Liability,Debenture Loan Stock
+Deferred Grantsa And Donations Reserves,Capital,Deferred Grantsa And Donations Reserves
+Demand Deposits,Liability,Demand Deposits
+Deposit,Liability,Deposit

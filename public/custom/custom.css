@@ -1,0 +1,19 @@
+#intercont{
+    display: flex;
+    position:absolute;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    z-index: 1;
+    visibility: hidden;
+}
+.intcolor{
+    background-color: #F9EDBE;
+    color: #000;
+    border: 1px solid #ecc733;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 5px 10px;
+    font-size: 18px;
+    font-weight:200;
+}

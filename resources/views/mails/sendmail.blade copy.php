@@ -398,17 +398,18 @@
                                 </p>
                                 <br>
                                 <hr>
-                                {{-- <p><img src="{{ asset('assets/img/1.png') }}" /></p> --}}
+                                <p><img src="{{ asset('assets/img/1.png') }}" /></p>
+                                <!-- Callout Panel -->
+                                {{-- <p class="“callout" style="text-align:center">
 
-                                <p class="callout" style="text-align:center">
-                                    For further enquiry, kindly contact us via call: <strong>08120568485</strong><br>
-                                    Email: <a href="mailto:clientservice@richgreenmasterscapital.com">
-                                        clientservice@richgreenmasterscapital.com
-                                    </a>
+                                    <a href="https://wa.me/+2348179470991">Whatsapp Banking</a> &nbsp; <a href="tel:*7006*10#">*7006*10#</a> &nbsp; <a href="https://cashmatrix.ng/">Mobile Banking</a>
+                                </p> --}}
+                                    <p class="“callout" style="text-align:center">
+
+                                    <a href="https://wa.me/+2348179470991">Whatsapp Banking</a> &nbsp; <a href="tel:*7006*10#">*7006*10#</a> &nbsp; <a href="https://cashmatrix.ng/">Mobile Banking</a>
                                 </p>
 
-
-                                {{-- <p><img src="{{ asset('assets/img/2.png') }}" /></p> --}}
+                                <p><img src="{{ asset('assets/img/2.png') }}" /></p>
 
 
 
@@ -425,13 +426,31 @@
                                                 <tr>
                                                     <td>
 
+                                                        {{-- <h5 class="">Connect with Us:</h5>
+												<p class="social">
+											<a href="https://www.facebook.com/cashmatrixapp"><img src="{{asset('assets/images/facebook.png')}}" width="25" style="border-radius:5px" alt=""></a> &nbsp;
+												<a href="https://www.instagram.com/usecashmatrix/"><img src="{{asset('assets/images/instagram.png')}}" width="25" style="border-radius:5px" alt=""></a> &nbsp;
+												<a href="https://twitter.com/CashmatrixA"><img src="{{asset('assets/images/twitter.png')}}" width="25" style="border-radius:5px" alt=""></a>
+											</p> --}}
 
                                                     </td>
                                                 </tr>
                                             </table><!-- /column 1 -->
 
                                             <!--- column 2 -->
+                                            <table align="left" class="column">
+                                                <tr>
+                                                    <td>
 
+                                                        <h5 class="">Contact Info:</h5>
+                                                        <p>Phone: <strong>+234 (0)704 648 8013</strong><br />
+                                                            Email: <strong><a
+                                                                    href="mailto:support@assetmatrixmfb.com">support@assetmatrixmfb.com</a></strong>
+                                                        </p>
+
+                                                    </td>
+                                                </tr>
+                                            </table><!-- /column 2 -->
 
                                             <span class="clear"></span>
 
@@ -452,7 +471,31 @@
         </tr>
     </table><!-- /BODY -->
 
+    <!-- FOOTER -->
+    <table class="footer-wrap">
+        <tr>
+            <td></td>
+            <td class="container">
 
+                <!-- content -->
+                <div class="content">
+                    <table>
+                        <tr>
+                            <td align="center">
+                                <p>
+                                    <a href="https://assetmatrixmfb.com/user-agreement">Terms and Conditions</a> |
+                                    <a href="https://assetmatrixmfb.com/data-consent">Privacy Policy</a>
+
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div><!-- /content -->
+
+            </td>
+            <td></td>
+        </tr>
+    </table><!-- /FOOTER -->
 
 </body>
 
